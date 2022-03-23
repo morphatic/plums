@@ -16,3 +16,10 @@ class Person:
         self.first_name = first_name
         self.last_name = last_name
         self.email = email_address
+
+    @property
+    def name(self):
+        """
+        Outputs the formatted name of the Person
+        """
+        return f"{self.first_name} {self.last_name}"

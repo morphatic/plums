@@ -14,7 +14,8 @@ class Room:
     be, e.g., an office or classroom or lab, etc.
     """
 
-    def __init__(self, number, length, width):
+    def __init__(self, building, number, length, width):
+        self.building = building
         self.number = number
         self.length = length
         self.width = width
@@ -26,3 +27,7 @@ class Room:
     @property
     def capacity(self):
         return floor(self.size / SQFT_PER_PERSON)
+
+    @property
+    def name(self):
+        return f"{self.building.name} {self.number}"

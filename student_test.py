@@ -21,3 +21,9 @@ def describe_a_student():
     def that_can_have_a_specified_major():
         carl = Student("Carl", "Carlson", "carl@example.com", "ISAT")
         assert carl.major == "ISAT"
+
+    def that_has_a_display_name_that_updates_with_fn_and_ln():
+        gerry = Student("Gerry", "Gerryson", "gerry@example.com", "Math")
+        assert gerry.name == "Gerry Gerryson"
+        gerry.first_name = "Geraldine"
+        assert gerry.name == "Geraldine Gerryson"
