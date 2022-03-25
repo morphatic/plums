@@ -11,7 +11,7 @@ class Course:
 
     @property
     def name(self):
-        return f"{self.subject} {self.number}"
+        return f"{self.subject}{self.number}"
 
     @property
     def display_name(self):
