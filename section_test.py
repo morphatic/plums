@@ -32,17 +32,30 @@ def describe_a_course_section():
             rooms.append(Room(building, room.Number, room.Length, room.Width))
         return rooms
 
-    def that_has_a_course(rooms):
+    @pytest.fixture
+    def students():
+        """Load students from CSV"""
+        student_data = read_csv("data/students.csv")
+        students = []
+        for i, s in student_data.iterrows():
+            students.append(Student(s.FirstName, s.LastName, s.Email, s.Major))
+        return students
+
+    @pytest.fixture
+    def instructors(rooms):
+        """Load instructors from CSV"""
+        instructor_data = read_csv("data/instructors.csv")
+        instructors = []
+        for i, t in instructor_data.iterrows():
+            office = [r for r in rooms if r.name == t.Office]
+            instructors.append(Instructor(t.FirstName, t.LastName, t.Email, office))
+        return instructors
+
+    def that_has_a_course(rooms, instructors, students):
         # get offices and classrooms from fixtures
-        engeo2208 = [r for r in rooms if r.name == "EnGeo 2208"]
-        king341 = [r for r in rooms if r.name == "King 341"]
         king337 = [r for r in rooms if r.name == "King 337"]
-        # create students and instructors to populate the section
-        morgan = Instructor("Morgan", "Benton", "morgan@example.edu", engeo2208)
-        teate = Instructor("Anthony", "Teate", "teate@example.edu", king341)
-        alice = Student("Alice", "Alison", "alice@example.edu", "ISAT")
-        bob = Student("Bob", "Bobson", "bob@example.edu")
-        charlie = Student("Charlie", "Charlieson", "charlie@example.edu", "CIS")
+        # get instructor from fixtures
+        morgan = [i for i in instructors if i.first_name == "Morgan"]
         # create a course
         isat252 = Course("ISAT", "252", "Programming and Problem Solving")
 
@@ -52,7 +65,7 @@ def describe_a_course_section():
             "S",
             2022,
             [morgan],
-            [alice, bob, charlie],
+            students,
             king337,
             "MWF",
             "9:10",
@@ -60,7 +73,7 @@ def describe_a_course_section():
         )
         assert isat252s2201.course.name == "ISAT252"
         assert morgan in isat252s2201.instructors
-        assert len(isat252s2201.students) == 3
+        assert len(isat252s2201.students) == len(students)
 
     # def that_displays_basic_info():
     #     assert (
