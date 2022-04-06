@@ -9,6 +9,7 @@ class Section:
         course,
         semester,
         year,
+        number,
         instructors,
         students,
         room,
@@ -19,8 +20,9 @@ class Section:
         self.course = course
         self.semester = semester
         self.year = year
+        self.number = number
         self.instructors = instructors
-        self.students = students
+        self.roster = students
         self.room = room
         self.days = days
         self.start_time = start_time
@@ -28,4 +30,4 @@ class Section:
 
     @property
     def info(self):
-        return f"{self.course.name} {self.semester}{str(self.year)[-2:]} {self.course.title}, {self.instructors[0].last_name}, {self.days} {self.start_time} ({self.duration} min)"
+        return f"{self.course.name} {self.semester}{str(self.year)[-2:]} {self.number} {self.course.title}, {self.instructors[0].last_name}, {self.days} {self.start_time} ({self.duration} min)"
